@@ -1,8 +1,7 @@
 
 provider "aws" {
     region = "us-east-1"
-    access_key = "AKIAUH7SWMJBMHR2DQN7"
-    secret_key = "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"
+ 
 }
 
 variable "dev_subnet_1_cider_block" {
