@@ -1,0 +1,14 @@
+### local .terraform file
+
+.terraform/*
+
+# tf state file
+
+*.tfstate
+*.tfstate/*
+
+#tf variables files, may include sensitive data
+
+*.tfvars
+
+### evary developers need to add his own variables in case he have key inside!!
