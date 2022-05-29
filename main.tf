@@ -123,7 +123,7 @@ resource "aws_instance" "myapp-server-gabi-terraform" {
     key_name = aws_key_pair.gabi-server-key.key_name
 
     user_data = file("user-data-script.sh")
- 
+ ######    run provisioner and connection as last result!!! --> terraform dont know the status of the resource after you run --> not recommended way!
 connection {
   type = "ssh"
   host = self.public_ip
@@ -132,14 +132,16 @@ connection {
   
 }
 
+provisioner "file" {
+  source = "user-data-script.sh"
+  destination = "/home/ec2-user/user-data-script.sh"
+
+
+}
+
 provisioner "remote-exec" {
 
-  inline = [
-    "export ENV=DEV",
-    "mkdir gabi-new-dir",
-    "mkdir gabi-new-dir1"
-
-  ]
+script = file("user-data-script.sh")
   
 }
 
