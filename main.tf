@@ -9,9 +9,8 @@ variable "subnet_cider_block" {}
 variable "availability_zone" {}
 variable "env_prefix" {}
 variable "my_ip" {}
-variable "public_key_location" {
-  
-}
+variable "public_key_location" {}
+variable "private_key_location" {}
 variable "instance_type" {}
 resource "aws_vpc" "gabi_myapp_vpc" {
     cidr_block=var.vpc_cider_block
@@ -125,6 +124,25 @@ resource "aws_instance" "myapp-server-gabi-terraform" {
 
     user_data = file("user-data-script.sh")
  
+connection {
+  type = "ssh"
+  host = self.public_ip
+  user = "ec2-user"
+  private_key = file(var.private_key_location)
+  
+}
+
+provisioner "remote-exec" {
+
+  inline = [
+    "export ENV=DEV",
+    "mkdir gabi-new-dir",
+    "mkdir gabi-new-dir1"
+
+  ]
+  
+}
+
     tags = {
         Name = "${var.env_prefix}-ec2-terraform01"
     createdby = "gabi magilner-terraform"
